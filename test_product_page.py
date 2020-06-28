@@ -1,23 +1,11 @@
-
-
-#link="http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear"
-
-# 1 открываем страницу товара
-# 2 нажимаем на кнопку добавить в корзину
-# 3посчитать результат
-# Ожидаемый результат:
-#
-#     Сообщение о том, что товар добавлен в корзину. Название товара в сообщении должно совпадать с тем товаром, который вы действительно добавили.
-#     Сообщение со стоимостью корзины. Стоимость корзины совпадает с ценой товара.
-#
-
 from .pages.product_page import ProductPage
 import pytest
+from .pages.login_page import LoginPage
 
 
 
 link="http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0"
-
+#Параметризированые промоссылки с падающим тестом
 # @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
 #                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
 #                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer2",
@@ -34,21 +22,36 @@ link="http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=
 #
 #     page.add_product_to_basket()
 
-@pytest.mark.xfail
-def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
+# Тесты с ожиданием на сообщение о добавлении
+# @pytest.mark.xfail
+# def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
+#     page = ProductPage(browser, link)
+#     page.open()
+#     page.cant_see_success_message_after_adding_product_to_basket()
+#
+# def test_guest_cant_see_success_message(browser):
+#     page = ProductPage(browser, link)
+#     page.open()
+#     page.cant_see_success_message()
+#
+# @pytest.mark.xfail
+# def test_message_disappeared_after_adding_product_to_basket(browser):
+#     page = ProductPage(browser, link)
+#     page.open()
+#     page.message_disappeared_after_adding_product_to_basket()
+
+
+def test_guest_should_see_login_link_on_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
     page = ProductPage(browser, link)
     page.open()
-    page.cant_see_success_message_after_adding_product_to_basket()
+    page.should_be_login_link()
 
-def test_guest_cant_see_success_message(browser):
+def test_guest_can_go_to_login_page_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
     page = ProductPage(browser, link)
     page.open()
-    page.cant_see_success_message()
-
-@pytest.mark.xfail
-def test_message_disappeared_after_adding_product_to_basket(browser):
-    page = ProductPage(browser, link)
-    page.open()
-    page.message_disappeared_after_adding_product_to_basket()
-
+    page.go_to_login_page()
+    login_page = LoginPage(browser, browser.current_url)
+    login_page.should_be_login_page()
 

@@ -17,3 +17,7 @@ class ProductPageLocators():
     ALERT_MESSAGE_TITLE=(By.CSS_SELECTOR, ".alertinner > strong")
     ALERT_MESSAGE_PRICE=(By.CSS_SELECTOR, ".alertinner > p > strong")
     SUCCESS_MESSAGE=(By.CSS_SELECTOR, ".alertinner")
+
+class BasePageLocators():
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
